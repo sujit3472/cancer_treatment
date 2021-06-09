@@ -43,9 +43,11 @@ class PatientEnquiryController extends Controller
     public function store(CreatePatientEnquiryRequest $request)
     {
         $requestData = $request->all();
-        if(Auth::check() && Auth::user()->role_id == 2 || Auth::user()->role_id == 1) {
+        if(Auth::check() ) {
+            if(Auth::user()->role_id == 2 || Auth::user()->role_id == 1) {
             Flash::error("You have not authorized user")->important();
             return redirect('/');
+            }
         }
        
         try {
