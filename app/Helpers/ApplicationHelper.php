@@ -65,13 +65,13 @@ function get_max_upload_file_size( $int_user_sepcific_max_size = 0 ) {
     // Clean the file name to make it safe to save by removing any special characters & whitespaces
     $str_filename = preg_replace('/[^A-Za-z0-9\-._]/', '', $str_file_name);
     // Append timestamp to each file name to make it unique
-    $path_parts = pathinfo($str_filename);
+    $path_parts     = pathinfo($str_filename);
     // Shorten file name to 200 character length max
     $path_parts['filename'] = (strlen($path_parts['filename']) > 200) ? substr($path_parts['filename'], 0,200): $path_parts['filename'];
     //$str_filename = $path_parts['filename'].'_'.time().'.'.$path_parts['extension'];
-    $micro_time     = time(true);
-    $micro_time     =   str_replace(".", "", $micro_time);
-    $str_filename = $path_parts['filename'].'_'.$micro_time.'.'.$path_parts['extension'];
+    $micro_time     = time();
+    $micro_time     = str_replace(".", "", $micro_time);
+    $str_filename   = $path_parts['filename'].'_'.$micro_time.'.'.$path_parts['extension'];
     
     return $str_filename;
 }

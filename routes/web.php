@@ -32,6 +32,8 @@ Route::get('/home', function()
             case 2:
                 Flash::success('Login Successfully')->important();
                 return redirect('/doctor/dashboard');
+            case 3:
+                return redirect('/');
         }
     } else {
         return redirect('/');

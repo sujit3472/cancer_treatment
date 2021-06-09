@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use DB;
+Use Auth;
 use Flash;
-use Exception;
 use App\User;
+use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -42,7 +43,10 @@ class PatientEnquiryController extends Controller
     public function store(CreatePatientEnquiryRequest $request)
     {
         $requestData = $request->all();
-
+        if(Auth::check() && Auth::user()->role_id == 2 || Auth::user()->role_id == 1) {
+            Flash::error("You have not authorized user")->important();
+            return redirect('/');
+        }
        
         try {
             DB::beginTransaction();
@@ -74,7 +78,7 @@ class PatientEnquiryController extends Controller
             
         } catch (Exception $e) {
             DB::rollback();
-            Flash::error("Oops! Something went wrong")->important();
+            Flash::error("Oops! Something went wrong ". $e->getMessage() )->important();
             return redirect()->back()->withInput(request()->all());   
         }
     }
